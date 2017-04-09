@@ -1,5 +1,4 @@
 #include "ipresentingwidget.h"
-#include "settingsdialog.h"
 #include "widgetpresenter.h"
 
 #include <QDebug>
@@ -18,10 +17,10 @@
 #define INPUT_WIDGET_OBJECT_NAME "__qtmvvm_InputDialog_InputWidget"
 
 WidgetPresenter::WidgetPresenter() :
-	inputFactory(new InputWidgetFactory()),
-	implicitMappings(),
-	explicitMappings(),
-	activeControls()
+	_inputFactory(new InputWidgetFactory()),
+	_implicitMappings(),
+	_explicitMappings(),
+	_activeControls()
 {}
 
 void WidgetPresenter::registerWidget(const QMetaObject &widgetType)
@@ -31,7 +30,7 @@ void WidgetPresenter::registerWidget(const QMetaObject &widgetType)
 		presenter = new WidgetPresenter();
 		CoreApp::setMainPresenter(presenter);
 	}
-	presenter->implicitMappings.append(widgetType);
+	presenter->_implicitMappings.append(widgetType);
 }
 
 void WidgetPresenter::registerWidgetExplicitly(const char *controlName, const QMetaObject &widgetType)
@@ -41,7 +40,7 @@ void WidgetPresenter::registerWidgetExplicitly(const char *controlName, const QM
 		presenter = new WidgetPresenter();
 		CoreApp::setMainPresenter(presenter);
 	}
-	presenter->explicitMappings.insert(controlName, widgetType);
+	presenter->_explicitMappings.insert(controlName, widgetType);
 }
 
 void WidgetPresenter::registerInputWidgetFactory(InputWidgetFactory *factory)
@@ -51,28 +50,28 @@ void WidgetPresenter::registerInputWidgetFactory(InputWidgetFactory *factory)
 		presenter = new WidgetPresenter();
 		CoreApp::setMainPresenter(presenter);
 	}
-	presenter->inputFactory.reset(factory);
+	presenter->_inputFactory.reset(factory);
 }
 
 InputWidgetFactory *WidgetPresenter::inputWidgetFactory()
 {
 	auto presenter = static_cast<WidgetPresenter*>(CoreApp::instance()->presenter());
 	if(presenter)
-		return presenter->inputFactory.data();
+		return presenter->_inputFactory.data();
 	else
 		return nullptr;
 }
 
 void WidgetPresenter::present(Control *control)
 {
-	if(activeControls.contains(control))
+	if(_activeControls.contains(control))
 		return;
 
 	auto ok = false;
 	auto widgetMetaObject = findWidgetMetaObject(control->metaObject(), ok);
 	if(ok) {
 		auto parentControl = control->parentControl();
-		auto parentWidget = parentControl ? activeControls.value(parentControl, nullptr) : nullptr;
+		auto parentWidget = parentControl ? _activeControls.value(parentControl, nullptr) : nullptr;
 
 		auto widget = qobject_cast<QWidget*>(widgetMetaObject.newInstance(Q_ARG(Control *, control),
 																		  Q_ARG(QWidget*, parentWidget)));
@@ -91,10 +90,10 @@ void WidgetPresenter::present(Control *control)
 			presented = tryPresent(widget, parentWidget);
 
 		if(presented) {
-			activeControls.insert(control, widget);
+			_activeControls.insert(control, widget);
 			widget->setAttribute(Qt::WA_DeleteOnClose);
 			QObject::connect(widget, &QWidget::destroyed, [=](){
-				activeControls.remove(control);
+				_activeControls.remove(control);
 				control->onClose();
 			});
 			control->onShow();
@@ -110,7 +109,7 @@ void WidgetPresenter::present(Control *control)
 
 void WidgetPresenter::withdraw(Control *control)
 {
-	auto widget = activeControls.value(control);
+	auto widget = _activeControls.value(control);
 	if(widget)
 		widget->close();
 	else {
@@ -227,13 +226,13 @@ QMetaObject WidgetPresenter::findWidgetMetaObject(const QMetaObject *controlMeta
 	auto currentMeta = controlMetaObject;
 	while(currentMeta && currentMeta->inherits(&Control::staticMetaObject)) {
 		QByteArray cName = currentMeta->className();
-		if(explicitMappings.contains(cName))
-			return explicitMappings.value(cName);
+		if(_explicitMappings.contains(cName))
+			return _explicitMappings.value(cName);
 		else {
 			auto lIndex = cName.lastIndexOf("Control");
 			if(lIndex > 0)
 				cName.truncate(lIndex);
-			foreach(auto metaObject, implicitMappings) {
+			foreach(auto metaObject, _implicitMappings) {
 				QByteArray wName = metaObject.className();
 				if(wName.startsWith(cName))
 					return metaObject;
@@ -275,7 +274,7 @@ bool WidgetPresenter::tryPresent(QWidget *widget, QWidget *parent)
 
 QDialog *WidgetPresenter::createInputDialog(const CoreApp::MessageConfig &config)
 {
-	auto input = inputFactory->createWidget(config.inputType, nullptr, config.editProperties);
+	auto input = _inputFactory->createWidget(config.inputType, nullptr, config.editProperties);
 	if(!input)
 		return nullptr;
 
@@ -291,7 +290,7 @@ QDialog *WidgetPresenter::createInputDialog(const CoreApp::MessageConfig &config
 
 	input->setParent(dialog);
 	input->setObjectName(INPUT_WIDGET_OBJECT_NAME);
-	auto property = inputFactory->userProperty(input);
+	auto property = _inputFactory->userProperty(input);
 	property.write(input, config.defaultValue);
 	layout->addWidget(input);
 
@@ -318,7 +317,7 @@ QVariant WidgetPresenter::extractInputResult(QDialog *inputDialog)
 {
 	auto inputWidget = inputDialog->findChild<QWidget*>(INPUT_WIDGET_OBJECT_NAME);
 	if(inputWidget) {
-		auto property = inputFactory->userProperty(inputWidget);
+		auto property = _inputFactory->userProperty(inputWidget);
 		return property.read(inputWidget);
 	} else
 		return {};
@@ -355,9 +354,4 @@ MessageResult::ResultType WidgetPresenter::getResult(QDialog *dialog)
 			return MessageResult::NeutralResult;
 		}
 	}
-}
-
-void WidgetPresenter::registerDefaults()
-{
-	registerWidget<SettingsDialog>();
 }

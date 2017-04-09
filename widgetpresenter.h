@@ -1,11 +1,11 @@
 #ifndef WIDGETPRESENTER_H
 #define WIDGETPRESENTER_H
 
-#include "inputwidgetfactory.h"
-#include "ipresenter.h"
-#include "messageresult.h"
-#include <QWidget>
 #include <coreapp.h>
+#include <ipresenter.h>
+#include <messageresult.h>
+#include <QWidget>
+#include "inputwidgetfactory.h"
 
 class WidgetPresenter : public IPresenter
 {
@@ -42,14 +42,13 @@ protected:
 	virtual void extendedShow(QWidget *widget) const;
 
 private:
-	QScopedPointer<InputWidgetFactory> inputFactory;
-	QList<QMetaObject> implicitMappings;
-	QHash<QByteArray, QMetaObject> explicitMappings;
+	QScopedPointer<InputWidgetFactory> _inputFactory;
+	QList<QMetaObject> _implicitMappings;
+	QHash<QByteArray, QMetaObject> _explicitMappings;
 
-	QHash<Control*, QWidget*> activeControls;
+	QHash<Control*, QWidget*> _activeControls;
 
 	static MessageResult::ResultType getResult(QDialog *dialog);
-	static void registerDefaults();
 };
 
 // ------------- Generic Implementation -------------
@@ -59,7 +58,6 @@ void WidgetPresenter::registerAsPresenter()
 {
 	static_assert(std::is_base_of<WidgetPresenter, TPresenter>::value, "TPresenter must inherit WidgetPresenter!");
 	CoreApp::setMainPresenter(new TPresenter());
-	registerDefaults();
 }
 
 template<typename TWidget>
