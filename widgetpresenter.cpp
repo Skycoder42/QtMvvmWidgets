@@ -15,6 +15,7 @@
 #include <QDialogButtonBox>
 #include <QLabel>
 #include <QVBoxLayout>
+#include <dialogmaster.h>
 
 #define INPUT_WIDGET_OBJECT_NAME "__qtmvvm_InputDialog_InputWidget"
 
@@ -189,19 +190,7 @@ void WidgetPresenter::showMessage(MessageResult *result, const CoreApp::MessageC
 	if(dialog) {
 		dialog->setParent(QApplication::activeWindow());
 		dialog->setAttribute(Qt::WA_DeleteOnClose);
-
-		//"dialog master" stuff
-		Qt::WindowFlags flags = Qt::MSWindowsFixedSizeDialogHint | Qt::WindowCloseButtonHint;
-		dialog->setSizeGripEnabled(false);
-		dialog->setModal(true);
-		if(dialog->parentWidget()) {
-			dialog->setWindowModality(Qt::WindowModal);
-			flags |= Qt::Sheet;
-		} else {
-			dialog->setWindowModality(Qt::ApplicationModal);
-			flags |= Qt::Dialog;
-		}
-		dialog->setWindowFlags(flags);
+		DialogMaster::masterDialog(dialog, true);
 
 		QObject::connect(dialog, &QDialog::finished, dialog, [=](){
 			auto res = getResult(dialog);
