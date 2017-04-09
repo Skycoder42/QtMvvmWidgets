@@ -13,6 +13,8 @@
 #include <QApplication>
 #include <float.h>
 #include <QDialogButtonBox>
+#include <QLabel>
+#include <QVBoxLayout>
 
 #define INPUT_WIDGET_OBJECT_NAME "__qtmvvm_InputDialog_InputWidget"
 
