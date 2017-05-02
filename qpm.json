@@ -10,13 +10,13 @@
     "url": "https://github.com/Skycoder42/QtMvvmWidgets.git"
   },
   "version": {
-    "label": "1.0.1",
+    "label": "1.0.2",
     "revision": "",
     "fingerprint": ""
   },
   "dependencies": [
     "de.skycoder42.qpm-include@1.0.0",
-    "de.skycoder42.dialog-master@1.2.4"
+    "de.skycoder42.dialog-master@1.2.5"
   ],
   "license": "BSD_3_CLAUSE",
   "pri_filename": "de_skycoder42_qtmvvm_widgets.pri",
