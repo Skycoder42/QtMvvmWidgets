@@ -1,0 +1,38 @@
+{
+    "dependencies": [
+        {
+            "package": "de.skycoder42.qtmvvm.core",
+            "provider": "qpm",
+            "version": "1.1.0"
+        },
+        {
+            "package": "de.skycoder42.dialog-master",
+            "provider": "qpm",
+            "version": "1.3.0"
+        }
+    ],
+    "license": {
+        "file": "LICENSE",
+        "name": "BSD_3_CLAUSE"
+    },
+    "prcFile": "",
+    "priFile": "de_skycoder42_qtmvvm_widgets.pri",
+    "priIncludes": [
+    ],
+    "publishers": {
+        "qpm": {
+            "author": {
+                "email": "skycoder42.de@gmx.de",
+                "name": "Skycoder"
+            },
+            "description": "The widgets frontend of QtMvvm",
+            "name": "de.skycoder42.qtmvvm.widgets",
+            "repository": {
+                "type": "GITHUB",
+                "url": "https://github.com/Skycoder42/QtMvvmWidgets.git"
+            },
+            "webpage": "https://github.com/Skycoder42/QtMvvm"
+        }
+    },
+    "source": false
+}

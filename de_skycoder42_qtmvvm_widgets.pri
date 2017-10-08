@@ -11,5 +11,5 @@ SOURCES += \
 	$$PWD/inputwidgetfactory.cpp \
 	$$PWD/listcombobox.cpp
 	
-QPM_TRANSLATIONS += $$PWD/qtmvvm_widgets_de.ts \
+TRANSLATIONS += $$PWD/qtmvvm_widgets_de.ts \
 	$$PWD/qtmvvm_widgets_template.ts

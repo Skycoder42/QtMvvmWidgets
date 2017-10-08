@@ -1,25 +1,24 @@
 {
-  "name": "de.skycoder42.qtmvvm.widgets",
-  "description": "The widgets frontend of QtMvvm",
-  "author": {
-    "name": "Skycoder",
-    "email": "skycoder42.de@gmx.de"
-  },
-  "repository": {
-    "type": "GITHUB",
-    "url": "https://github.com/Skycoder42/QtMvvmWidgets.git"
-  },
-  "version": {
-    "label": "1.0.4",
-    "revision": "",
-    "fingerprint": ""
-  },
-  "dependencies": [
-    "de.skycoder42.qpm-include@1.0.0",
-    "de.skycoder42.dialog-master@1.2.7",
-    "de.skycoder42.qpm-translate@1.1.0"
-  ],
-  "license": "BSD_3_CLAUSE",
-  "pri_filename": "de_skycoder42_qtmvvm_widgets.pri",
-  "webpage": "https://github.com/Skycoder42/QtMvvm"
+    "author": {
+        "email": "skycoder42.de@gmx.de",
+        "name": "Skycoder"
+    },
+    "dependencies": [
+        "de.skycoder42.qtmvvm.core@1.1.0",
+        "de.skycoder42.dialog-master@1.3.0"
+    ],
+    "description": "The widgets frontend of QtMvvm",
+    "license": "BSD_3_CLAUSE",
+    "name": "de.skycoder42.qtmvvm.widgets",
+    "pri_filename": "de_skycoder42_qtmvvm_widgets.pri",
+    "repository": {
+        "type": "GITHUB",
+        "url": "https://github.com/Skycoder42/QtMvvmWidgets.git"
+    },
+    "version": {
+        "fingerprint": "",
+        "label": "1.1.0",
+        "revision": ""
+    },
+    "webpage": "https://github.com/Skycoder42/QtMvvm"
 }
