@@ -17,7 +17,7 @@ QWidget *InputWidgetFactory::createWidget(const QByteArray &type, QWidget *paren
 	QWidget *widget = nullptr;
 	if(_simpleWidgets.contains(type))
 		widget = _simpleWidgets.value(type)(parent);
-	if(type == "bool")
+	else if(type == "bool")
 		widget = new QCheckBox(parent);
 	else if(type == "string" || type == "QString")
 		widget = new QLineEdit(parent);
