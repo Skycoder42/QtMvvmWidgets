@@ -4,17 +4,22 @@
 <context>
     <name>WidgetPresenter</name>
     <message>
-        <location filename="widgetpresenter.cpp" line="172"/>
+        <location filename="widgetpresenter.cpp" line="+168"/>
+        <source>Information</source>
+        <translation>Information</translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Question</source>
         <translation>Frage</translation>
     </message>
     <message>
-        <location filename="widgetpresenter.cpp" line="176"/>
+        <location line="+4"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="widgetpresenter.cpp" line="180"/>
+        <location line="+4"/>
         <source>Error</source>
         <translation>Error</translation>
     </message>

@@ -50,12 +50,12 @@ bool InputWidgetFactory::addSimpleWidget(const QByteArray &type, const std::func
 QWidget *InputWidgetFactory::createListWidget(QWidget *parent, const QVariantMap &editProperties)
 {
 	auto box = new ListComboBox(parent);
-	foreach(auto item, editProperties.value("_list_elements").toList()) {
+	foreach(auto item, editProperties.value(QStringLiteral("_list_elements")).toList()) {
 		if(item.type() == QVariant::String)
 			box->addItem(item.toString(), item);
 		else {
 			auto iData = item.toMap();
-			box->addItem(iData.value("name").toString(), iData.value("value"));
+			box->addItem(iData.value(QStringLiteral("name")).toString(), iData.value(QStringLiteral("value")));
 		}
 	}
 	return box;

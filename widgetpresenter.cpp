@@ -17,7 +17,7 @@
 #include <QVBoxLayout>
 #include <dialogmaster.h>
 
-#define INPUT_WIDGET_OBJECT_NAME "__qtmvvm_InputDialog_InputWidget"
+#define INPUT_WIDGET_OBJECT_NAME QStringLiteral("__qtmvvm_InputDialog_InputWidget")
 
 WidgetPresenter::WidgetPresenter() :
 	_inputFactory(new InputWidgetFactory()),
@@ -165,7 +165,7 @@ void WidgetPresenter::showMessage(MessageResult *result, const CoreApp::MessageC
 		switch (config.type) {
 		case CoreApp::Information:
 			msgBox->setIcon(QMessageBox::Information);
-			msgBox->setWindowTitle("Information");
+			msgBox->setWindowTitle(tr("Information"));
 			break;
 		case CoreApp::Question:
 			msgBox->setIcon(QMessageBox::Question);
