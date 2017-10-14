@@ -1,4 +1,4 @@
-#include "qtmvvmwidgets.h"
+#include "qtmvvmbinding.h"
 #include <QDebug>
 
 QtMvvmBinding::QtMvvmBinding(QObject *control, const QMetaProperty &controlProperty, QObject *widget, const QMetaProperty &widgetProperty) :
@@ -116,13 +116,13 @@ void QtMvvmBinding::init()
 void QtMvvmBinding::bindFrom()
 {
 	auto signal = _controlProperty.notifySignal();
-	auto trigger = metaObject()->method(metaObject()->indexOfSlot("controlTrigger"));
+	auto trigger = metaObject()->method(metaObject()->indexOfSlot("controlTrigger()"));
 	connect(_control, signal, this, trigger);
 }
 
 void QtMvvmBinding::bindTo()
 {
 	auto signal = _widgetProperty.notifySignal();
-	auto trigger = metaObject()->method(metaObject()->indexOfSlot("widgetTrigger"));
+	auto trigger = metaObject()->method(metaObject()->indexOfSlot("widgetTrigger()"));
 	connect(_widget, signal, this, trigger);
 }

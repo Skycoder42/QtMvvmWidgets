@@ -1,5 +1,5 @@
-#ifndef QTMVVMWIDGETS_H
-#define QTMVVMWIDGETS_H
+#ifndef QTMVVMBINDING_H
+#define QTMVVMBINDING_H
 
 #include <QObject>
 #include <QMetaProperty>
@@ -41,4 +41,4 @@ private:
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QtMvvmBinding::BindingDirection)
 
-#endif // QTMVVMWIDGETS_H
+#endif // QTMVVMBINDING_H
