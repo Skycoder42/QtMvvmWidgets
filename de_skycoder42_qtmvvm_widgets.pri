@@ -4,12 +4,14 @@ HEADERS += \
 	$$PWD/widgetpresenter.h \
 	$$PWD/ipresentingwidget.h \
 	$$PWD/inputwidgetfactory.h \
-	$$PWD/listcombobox.h
+	$$PWD/listcombobox.h \
+    $$PWD/qtmvvmwidgets.h
 
 SOURCES += \
 	$$PWD/widgetpresenter.cpp \
 	$$PWD/inputwidgetfactory.cpp \
-	$$PWD/listcombobox.cpp
+	$$PWD/listcombobox.cpp \
+    $$PWD/qtmvvmwidgets.cpp
 
 TRANSLATIONS += $$PWD/qtmvvm_widgets_de.ts \
 	$$PWD/qtmvvm_widgets_template.ts
